@@ -72,5 +72,6 @@ Route::middleware('authSuccess')->group(function () {
         Route::get('/dashboard', [GuruViewController::class, 'dashboard']);
 
         Route::get('/pengumuman', [GuruViewController::class, 'pengumuman']);
+        Route::get('/laporan-siswa', [GuruViewController::class, 'laporanSiswa']);
     });
 });
