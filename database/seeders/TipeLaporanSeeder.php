@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\TipePengumuman;
+use App\Models\TipeLaporan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TypePengumumanSeeder extends Seeder
+class TipeLaporanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +14,11 @@ class TypePengumumanSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'Pengumuman', 'KJP', 'Pendataan', 'Lainnya'
+            'Pembulian', 'Perkelahian', 'Fasilitas', 'Pengumuman', 'Asusila', 'Lainnya'
         ];
 
         foreach ($data as $item) {
-            TipePengumuman::create([
+            TipeLaporan::create([
                 'tipe' => $item
             ]);
         }

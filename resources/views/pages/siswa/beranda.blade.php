@@ -12,7 +12,7 @@
     - ABSENSI
     - FORUM
 --}}
-    <h3 class="px-3 pt-4 mb-1 text-lg font-semibold">Hi, ALAN PRATAMA RUSFI</h3>
+    <h3 class="px-5 pt-4 mb-1 text-lg font-semibold uppercase">Hi, {{ Auth::user()->nama }}</h3>
     <div class="grid grid-cols-3 place-items-center gap-3 gap-y-6 px-3">
         <div class="sm:w-full sm:h-full w-16 h-16 py-2 flex flex-col justify-start items-center gap-1 mb-2 rounded">
             <img src="{{ asset('class-svgrepo-com.svg') }}" class="w-2/3 rounded-full shadow" alt="">
@@ -22,10 +22,10 @@
             <img src="{{ asset('class-svgrepo-com.svg') }}" class="w-2/3 rounded-full shadow" alt="">
             <h3 class="text-[12px] text-center">JADWAL PELAJARAN</h3>
         </div>
-        <div class="sm:w-full sm:h-full w-16 h-16 py-2 flex flex-col justify-start items-center gap-1 mb-2 rounded">
+        <a href="{{ url('/siswa/laporan-siswa') }}" class="sm:w-full sm:h-full w-16 h-16 py-2 flex flex-col justify-start items-center gap-1 mb-2 rounded">
             <img src="{{ asset('class-svgrepo-com.svg') }}" class="w-2/3 rounded-full shadow" alt="">
-            <h3 class="text-[12px] text-center">LAPORAN PEMBULIAN</h3>
-        </div>
+            <h3 class="text-[12px] text-center">LAPORAN SISWA</h3>
+        </a>
         <a href="{{ url('/siswa/pengumuman') }}" class="sm:w-full sm:h-full w-16 h-16 py-2 flex flex-col justify-start items-center gap-1 mb-2 rounded">
             <img src="{{ asset('class-svgrepo-com.svg') }}" class="w-2/3 rounded-full shadow" alt="">
             <h3 class="text-[12px] text-center">PENGUMUMAN</h3>

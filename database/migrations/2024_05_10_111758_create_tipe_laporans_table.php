@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tipe_laporans', function (Blueprint $table) {
             $table->id();
+
+            $table->string('tipe');            
+
             $table->timestamps();
         });
     }

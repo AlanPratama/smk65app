@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('gambar')->nullable();
 
             $table->date('tanggal');
-            $table->time('waktu');
 
             $table->string('status');
 

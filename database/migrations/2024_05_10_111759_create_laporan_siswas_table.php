@@ -17,16 +17,18 @@ return new class extends Migration
             $table->unsignedBigInteger('siswaId')->nullable();
             $table->foreign('siswaId')->references('id')->on('siswas');
 
+            $table->unsignedBigInteger('tipeId')->nullable();
+            $table->foreign('tipeId')->references('id')->on('tipe_laporans');
+
             $table->string('judul');
             $table->text('deskripsi');
             
             $table->string('keterangan')->nullable();
 
             $table->date('tanggal');
-            $table->time('waktu');
 
-            $table->string('status'); // BTW INI BUAT APA YA
-            $table->string('foto');
+            $table->enum('status', ['Publik', 'Privat']); // BTW INI BUAT APA YA
+            $table->string('gambar')->nullable();
 
             $table->timestamps();
         });

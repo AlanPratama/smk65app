@@ -22,4 +22,11 @@ class GuruViewController extends Controller
         return view('pages.guru.pengumuman.viewGuruPengumuman', compact('types', 'pgMenu'));
     }
 
+    public function laporanSiswa()
+    {
+        $pgMenu = 'Laporan Siswa';
+
+        return view('pages.guru.laporanSiswa.viewGuruLaporanSiswa', compact('pgMenu'));
+    }
+
 }

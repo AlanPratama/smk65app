@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruViewController;
+use App\Http\Controllers\LaporanSiswaController;
 use App\Http\Controllers\PengumumanAjaxController;
 use App\Http\Controllers\SiswaViewController;
 use App\Models\Pengumuman;
@@ -60,10 +61,18 @@ Route::middleware('authSuccess')->group(function () {
     // ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA  
     Route::prefix('/siswa')->middleware('onlySiswa')->group(function () {
         Route::get('/beranda', [SiswaViewController::class, 'beranda']);
-
-        // PENGUMUMAN VIEW FOR SISWA
+        
         Route::get('/pengumuman', [SiswaViewController::class, 'pengumuman']);
+        Route::get('/laporan-siswa', [SiswaViewController::class, 'laporanSiswa']);
+        Route::get('/laporan-siswa-ajax', [LaporanSiswaController::class, 'index']);
+        Route::post('/laporan-siswa-ajax', [LaporanSiswaController::class, 'store']);
+        
     });
+    // ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA  
+    // ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA  
+
+
+    // ====================================================================================== 
 
 
     // ROUTE GURU || ROUTE GURU || ROUTE GURU || ROUTE GURU || ROUTE GURU || ROUTE GURU 

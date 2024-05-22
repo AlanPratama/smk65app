@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengumuman;
+use App\Models\TipeLaporan;
 use Illuminate\Http\Request;
 
 class SiswaViewController extends Controller
@@ -20,5 +21,13 @@ class SiswaViewController extends Controller
         $pengumuman = Pengumuman::orderBy('created_at', 'desc')->get();
 
         return view('pages.siswa.pengumuman', compact('pengumuman'));
+    }
+
+    public function laporanSiswa()
+    {
+        $pgMenu = 'Laporan Siswa';
+        $types = TipeLaporan::orderBy('tipe', 'desc')->get();
+
+        return view('pages.siswa.laporanSiswa', compact('types', 'pgMenu'));
     }
 }

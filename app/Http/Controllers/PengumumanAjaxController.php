@@ -85,7 +85,6 @@ class PengumumanAjaxController extends Controller
             'keterangan' => $req->keterangan,
             'gambar' => $gambar,
             'tanggal' => Carbon::now()->toDateString(),
-            'waktu' => Carbon::now()->toTimeString(),
             'status' => 'Aktif'
         ]);
 

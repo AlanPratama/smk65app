@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') | SMK 65 Jakarta</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!--=============== BOXICONS ===============-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 </head>
@@ -64,9 +66,9 @@
     </nav> --}}
 
 
-    <div class="flex justify-center items-center">
-        <div class="max-w-3xl">
-            <div class="mt-16 mb-16 md:mb-0">
+    <div class="lg:flex lg:justify-center lg:items-center">
+        <div class="lg:max-w-3xl">
+            <div class="mb-24 md:mt-28 mt-20 md:mb-0">
                 @yield('content')
             </div>
         
