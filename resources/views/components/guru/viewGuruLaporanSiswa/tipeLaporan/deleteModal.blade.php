@@ -19,7 +19,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah Kamu Yakin Akan Menghapus Tipe Pengumuman Ini?</h3>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah Kamu Yakin Akan Menghapus
+                    Tipe Pengumuman Ini?</h3>
                 <input type="hidden" value="" id="delete-tipe-id">
                 <button type="button" id="delete-tipe-submit"
                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">Hapus</button>
@@ -31,14 +32,13 @@
 </div>
 
 <script>
-
     $('body').on('click', '#btn-delete-tipe', function() {
         $('#backdrop-effect-tipe').removeClass('hidden')
         $('#delete-tipe-modal').removeClass('hidden')
         $('#delete-tipe-modal').addClass('flex')
-        
+
         let tipeId = $(this).data('id')
-        
+
         console.log(tipeId);
         $('#delete-tipe-id').val(tipeId)
     })
@@ -54,34 +54,35 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: `/tipe-pengumuman/${tipeId}`,
+            url: `/guru/tipe-laporan-ajax/${tipeId}`,
             success: function(res) {
-                console.log(res);
-                $('#table-tipe-' + tipeId).remove()
+                getDataTipe()
+                // console.log(res);
+                // $('#table-tipe-' + tipeId).remove()
 
                 $('#backdrop-effect').addClass('hidden')
                 $('#delete-tipe-modal').addClass('hidden')
                 $('#delete-tipe-modal').removeClass('flex')
 
                 const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Tipe Pengumuman Dihapus!"
-                    });
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Tipe Laporan Dihapus!"
+                });
             }
         })
     })
-    
+
     $('body').on('click', '#delete-tipe-modal', function() {
         $('#backdrop-effect-tipe').addClass('hidden')
         $('#delete-tipe-modal').addClass('hidden')

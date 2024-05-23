@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('laporan_siswas', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('siswaId')->nullable();
+            $table->unsignedBigInteger('siswaId');
             $table->foreign('siswaId')->references('id')->on('siswas');
 
             $table->unsignedBigInteger('tipeId')->nullable();

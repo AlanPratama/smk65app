@@ -18,7 +18,7 @@
                         </div>
                         <input type="text" name="tipe" id="create-tipe-pengumuman"
                             class="block w-full px-2.5 py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Masukkan Tipe Pengumuman..." required />
+                            placeholder="Masukkan Tipe Pengumuman..." />
                     </div>
                     <button type="submit"
                         class="transition-all flex justify-center items-center text-white bg-gradient-to-r from-blue-700 via-blue-700 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-r-lg text-sm px-4 py-2 text-center me-2">
@@ -80,7 +80,7 @@
     </div>
 
     @include('components.guru.viewGuruLaporanSiswa.tipeLaporan.editModal')
-@include('components.guru.viewGuruLaporanSiswa.tipeLaporan.deleteModal')
+    @include('components.guru.viewGuruLaporanSiswa.tipeLaporan.deleteModal')
 
     <script>
         function searchTipe(str) {
@@ -246,7 +246,7 @@
     
                 $.ajax({
                     type: 'POST',
-                    url: "/tipe-pengumuman",
+                    url: "/guru/tipe-laporan-ajax",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -307,6 +307,22 @@
     
                                 </tr>
                             `)
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Tipe Laporan Ditambahkan!"
+                            });
     
                         }
     

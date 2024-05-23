@@ -12,8 +12,8 @@
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
                         <input type="text" name="tipe" id="create-tipe-pengumuman"
@@ -29,8 +29,8 @@
             </div>
             <button onclick="getDataTipe()" type="button"
                 class="transition-all flex justify-center items-center text-white bg-gradient-to-r from-green-700 via-green-700 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded text-sm px-4 py-2 text-center me-2">
-                <svg class="h-3.5 w-3.5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true">
+                <svg class="h-3.5 w-3.5 mr-1 -ml-1" fill="currentColor" viewbox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path clip-rule="evenodd" fill-rule="evenodd"
                         d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                 </svg>
@@ -165,14 +165,14 @@
 
     function getDataTipe() {
         $.ajax({
-        type: 'GET',
-        url: '/tipe-pengumumanAjax',
-        success: function(res) {
-            console.log(res);
-            $('#table-tipe').empty();
-            if (res.data.length > 0) {
-                res.data.forEach(res => {
-                $('#table-tipe').append(`
+            type: 'GET',
+            url: '/tipe-pengumumanAjax',
+            success: function(res) {
+                console.log(res);
+                $('#table-tipe').empty();
+                if (res.data.length > 0) {
+                    res.data.forEach(res => {
+                        $('#table-tipe').append(`
                     <tr id="table-tipe-${res.id}"
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 
@@ -222,9 +222,9 @@
 
                     </tr>
                 `)
-            })  
-            } else {
-                $('#table-tipe').append(`
+                    })
+                } else {
+                    $('#table-tipe').append(`
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td colspan="3" class="px-6 py-4 text-center">
@@ -232,9 +232,9 @@
                         </td>
                     </tr>
                 `)
+                }
             }
-        }
-    })
+        })
     }
 
     getDataTipe()
@@ -308,6 +308,22 @@
 
                             </tr>
                         `)
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Tipe Pengumuman Ditambahkan!"
+                        });
 
                     }
 

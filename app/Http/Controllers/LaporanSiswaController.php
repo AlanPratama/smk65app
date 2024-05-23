@@ -18,7 +18,7 @@ class LaporanSiswaController extends Controller
         if ($req->search) {
             $laporan = LaporanSiswa::where('siswaId', Auth::user()->id)
                 ->with('siswa', 'tipe')
-                ->where('judul', 'LIKE', '%' . $req->search . '%')
+                ->where('judul', ''. $req->search . '%')
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
@@ -200,7 +200,7 @@ class LaporanSiswaController extends Controller
         if ($req->search || $req->tipeId) {
             if ($req->search && !$req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
-                    ->where('judul', 'LIKE', '%' . $req->search . '%')
+                    ->where('judul', ''. $req->search . '%')
                     ->orderBy('created_at', 'desc')
                     ->get();
             } elseif (!$req->search && $req->tipeId) {
@@ -211,7 +211,7 @@ class LaporanSiswaController extends Controller
             } elseif ($req->search && $req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
                     ->where('tipeId', $req->tipeId)
-                    ->where('judul', 'LIKE', '%' . $req->search . '%')
+                    ->where('judul', ''. $req->search . '%')
                     ->orderBy('created_at', 'desc')
                     ->get();
             }
@@ -231,7 +231,7 @@ class LaporanSiswaController extends Controller
     public function indexTipe(Request $req)
     {
         if ($req->search) {
-            $data = TipeLaporan::with('laporan')->where('tipe', 'LIKE', '%' . $req->search . '%')->orderBy('tipe', 'asc')->get();
+            $data = TipeLaporan::with('laporan')->where('tipe', ''. $req->search . '%')->orderBy('tipe', 'asc')->get();
         } else {
             $data = TipeLaporan::with('laporan')->orderBy('tipe', 'asc')->get();
         }
@@ -275,7 +275,7 @@ class LaporanSiswaController extends Controller
 
         return response()->json([
             'statusCode' => 200,
-            'message' => 'Tipe Tersimpan',
+            'message' => 'Tipe Laporan Tersimpan',
             'data' => TipeLaporan::where('id', $tipe->id)->with('laporan')->first()
         ]);
     }
@@ -302,12 +302,37 @@ class LaporanSiswaController extends Controller
 
         return response()->json([
             'statusCode' => 200,
-            'message' => 'Tipe Tersimpan',
+            'message' => 'Tipe Laporan Diperbarui!',
             'data' => TipeLaporan::where('id', $tipe->id)->with('laporan')->first()
         ]);
     }
 
     public function destroyTipe($id)
     {
+        $tipeLaporan = TipeLaporan::where('id', $id)->with('laporan')->first();
+        // dd($tipeLaporan->laporan);
+        if ($tipeLaporan->laporan->count() > 0 ) {
+            $tipeLainnya = TipeLaporan::whereIn('tipe', ['Lainnya', 'Lain', 'Other'])->where('id', '!=', $id)->first();
+
+            
+            if ($tipeLainnya) {
+                $tipeLaporan->laporan->each(function($laporan) use($tipeLainnya) {
+                    $laporan->tipeId = $tipeLainnya->id;
+                    $laporan->save(); 
+                });
+            } else {
+                $tipeLaporan->laporan->each(function($laporan) {
+                    $laporan->tipeId = null; 
+                    $laporan->save(); 
+                });
+            }
+        }
+
+        $tipeLaporan->delete();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Tipe Laporan Dihapus!',
+        ]);
     }
 }

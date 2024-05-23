@@ -153,7 +153,7 @@
                     });
                     Toast.fire({
                         icon: "success",
-                        title: "Pengumuman Ditambahkan"
+                        title: "Tipe Laporan Diupdate!"
                     });
 
                 },
