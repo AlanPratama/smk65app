@@ -266,9 +266,6 @@
                         icon: "success",
                         title: "Pengumuman Ditambahkan"
                     });
-
-
-                    console.log(res);
                 }
             })
 

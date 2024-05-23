@@ -158,7 +158,7 @@
                     }
 
                     $('#laporan-siswa-list').prepend(`
-                    <li class="mb-10 lg:ml-6 ml-1">
+                    <li class="mb-10 lg:ml-6 ml-1" id="laporan-${res.data.id}">
                         <span
                             class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
@@ -199,8 +199,8 @@
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
+                        showConfirmButton: true,
+                        timer: 1500,
                         timerProgressBar: true,
                         didOpen: (toast) => {
                             toast.onmouseenter = Swal.stopTimer;

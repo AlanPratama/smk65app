@@ -9,6 +9,10 @@
 </head>
 <body>
     <h3>INI HOMEPAGE 65</h3>
+    <ol>
+        <li><a href="{{ url('/auth/siswa') }}">LOGIN SISWA</a></li>
+        <li><a href="{{ url('/auth/guru') }}">LOGIN GURU</a></li>
+    </ol>
     
 </body>
 </html>

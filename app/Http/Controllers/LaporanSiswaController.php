@@ -32,7 +32,7 @@ class LaporanSiswaController extends Controller
     
     public function show($id)
     {
-        $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->first();
+        $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->with('siswa', 'tipe')->first();
         
         return response()->json([
             'statusCode' => 200,
@@ -73,7 +73,17 @@ class LaporanSiswaController extends Controller
         if ($req->hasFile('gambar')) {
             $file = $req->file('gambar');
             $fileName =  Str::slug($req->judul) . '-' . time() . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('laporanSiswa', $fileName);
+
+            
+            // $destinationPath = public_path('/storage/laporanSiswa');
+
+            // // Ensure the destination directory exists
+            // if (!file_exists($destinationPath)) {
+            //     mkdir($destinationPath, 0755, true);
+            // }
+
+            $file->move('storage/laporanSiswa', $fileName);
+            $path = 'laporanSiswa/' . $fileName;
             $laporan->gambar = $path;
         }
 
@@ -85,14 +95,17 @@ class LaporanSiswaController extends Controller
 
         $laporan->save();
 
+        $data = LaporanSiswa::where('id', $laporan->id)->with('siswa', 'tipe')->first();
+
         return response()->json([
             'statusCode' => 200,
-            'data' => $laporan,
+            'data' => $data,
             $req->all()
         ]);
     }
     public function update(Request $req, $id)
     {
+        // dd($req->all());
         $validator = Validator::make($req->all(), [
             'tipeId' => 'required',
             'judul' => 'required',
@@ -107,6 +120,7 @@ class LaporanSiswaController extends Controller
             'gambar.max' => 'Ukuran gambar maksimal 3 MB',
         ]);
 
+
         if ($validator->fails()) {
             return response()->json([
                 'statusCode' => 422,
@@ -114,12 +128,20 @@ class LaporanSiswaController extends Controller
             ], 422);
         }
 
-        $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->first();
+        $laporan = LaporanSiswa::where('id', $id)->with('siswa', 'tipe')->where('siswaId', Auth::user()->id)->first();
         $laporan->tipeId = $req->tipeId;
+        
         $laporan->judul = $req->judul;
+        
         $laporan->deskripsi = $req->deskripsi;
         $laporan->keterangan = $req->keterangan;
         $laporan->status = $req->status;
+
+        if ($req->deleteImage == 'true') {
+            Storage::delete($laporan->gambar);
+            $laporan->gambar = null;
+            // dd($laporan->gambar);
+        }
 
         if ($req->hasFile('gambar')) {
             if ($laporan->gambar) {
@@ -127,7 +149,10 @@ class LaporanSiswaController extends Controller
             }
             $file = $req->file('gambar');
             $fileName =  Str::slug($req->judul) . '-' . time() . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('laporanSiswa', $fileName);
+
+            $file->move('storage/laporanSiswa', $fileName);
+            $path = 'laporanSiswa/' . $fileName;
+
             $laporan->gambar = $path;
         }
 
@@ -137,7 +162,10 @@ class LaporanSiswaController extends Controller
             $laporan->status = 'Publik';
         }
 
-        $laporan->save();
+        $laporan->update();
+
+        // dd($req->all(), $laporan->judul);
+
 
         return response()->json([
             'statusCode' => 200,

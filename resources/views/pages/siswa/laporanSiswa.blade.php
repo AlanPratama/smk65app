@@ -63,14 +63,14 @@
             success: function(res) {
                 res.data?.forEach((res) => {
 
-                    let guruProPic = null
+                    let siswaProPic = null
 
                     if (res.gambar) {
-                        guruProPic = `{{ asset('storage/${res.gambar}') }}`
+                        siswaProPic = `{{ asset('storage/${res.gambar}') }}`
                     }
 
                     $('#laporan-siswa-list').append(`
-                    <li class="mb-10 lg:ml-6 ml-1">
+                    <li class="mb-10 lg:ml-6 ml-1" id="laporan-${res.id}">
                         <span
                             class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
@@ -87,7 +87,7 @@
                             <p class="mb-3 text-justify text-base text-gray-800 dark:text-gray-400">${res.deskripsi}</p>
                             <div
                                 class="${!res.gambar && 'hidden'} inline-flex items-center text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:focus:ring-gray-700">
-                                <img src="${res.gambar && guruProPic}" alt="${res.judul}" class="rounded-md max-w-full">
+                                <img src="${res.gambar && siswaProPic}" alt="${res.judul}" class="rounded-md max-w-full">
                             </div>
                             <div>
                                 <p
@@ -125,14 +125,14 @@
 
                     res.data?.forEach((res) => {
 
-                    let guruProPic = null
+                    let siswaProPic = null
 
                     if (res.gambar) {
-                        guruProPic = `{{ asset('storage/${res.gambar}') }}`
+                        siswaProPic = `{{ asset('storage/${res.gambar}') }}`
                     }
 
                     $('#laporan-siswa-list').append(`
-                    <li class="mb-10 lg:ml-6 ml-1">
+                    <li class="mb-10 lg:ml-6 ml-1" id="laporan-${res.id}">
                         <span
                             class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
                             <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
@@ -149,7 +149,7 @@
                             <p class="mb-3 text-justify text-base text-gray-800 dark:text-gray-400">${res.deskripsi}</p>
                             <div
                                 class="${!res.gambar && 'hidden'} inline-flex items-center text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:focus:ring-gray-700">
-                                <img src="${res.gambar && guruProPic}" alt="${res.judul}" class="rounded-md max-w-full">
+                                <img src="${res.gambar && siswaProPic}" alt="${res.judul}" class="rounded-md max-w-full">
                             </div>
                             <div>
                                 <p

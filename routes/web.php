@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    dd(Auth::guard('guru')->user());
+    // dd(Auth::guard('guru')->user());
     return view('pages.homepage');
 })->name('login');
 
@@ -64,8 +64,12 @@ Route::middleware('authSuccess')->group(function () {
         
         Route::get('/pengumuman', [SiswaViewController::class, 'pengumuman']);
         Route::get('/laporan-siswa', [SiswaViewController::class, 'laporanSiswa']);
+
+        // LAPORAN SISWA
         Route::get('/laporan-siswa-ajax', [LaporanSiswaController::class, 'index']);
+        Route::get('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'show']);
         Route::post('/laporan-siswa-ajax', [LaporanSiswaController::class, 'store']);
+        Route::put('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'update']);
         
     });
     // ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA  
