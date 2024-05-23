@@ -114,15 +114,15 @@
 
             reader.readAsDataURL(file);
 
-            $('#deleteImage').val('true')
+            $('#deleteImage').val('false')
         }
     });
 
-    function hapusImageEdit(e) {
+    function hapusImageEdit() {
         inputGambarEdit.value = null
         previewImgEdit.src = null;
         imagePreviewEdit.classList.add('hidden');
-        $('#deleteImage').val('false')
+        $('#deleteImage').val('true')
     }
 
 
@@ -144,6 +144,7 @@
         $('#deskripsiEditError').html('')
         $('#gambarEditError').html('')
 
+        $('#deleteImage').val('false')
 
         $('#previewImgEdit').src = null
         imagePreviewEdit.classList.add('hidden')
@@ -165,6 +166,7 @@
         $('#deskripsiEditError').html('')
         $('#gambarEditError').html('')
 
+        $('#deleteImage').val('false')
 
         $('#previewImgEdit').src = null
         imagePreviewEdit.classList.add('hidden')

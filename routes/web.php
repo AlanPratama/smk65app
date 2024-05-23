@@ -70,6 +70,7 @@ Route::middleware('authSuccess')->group(function () {
         Route::get('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'show']);
         Route::post('/laporan-siswa-ajax', [LaporanSiswaController::class, 'store']);
         Route::put('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'update']);
+        Route::delete('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'destroy']);
         
     });
     // ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA || ROUTE SISWA  

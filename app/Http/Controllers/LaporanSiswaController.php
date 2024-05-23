@@ -174,7 +174,17 @@ class LaporanSiswaController extends Controller
     }
     public function destroy($id)
     {
+        $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->first();
+        if ($laporan->gambar) {
+            Storage::delete($laporan->gambar);
+        }
 
+        $laporan->delete();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Laporan Dihapus!'
+        ]);
     }
 
 }

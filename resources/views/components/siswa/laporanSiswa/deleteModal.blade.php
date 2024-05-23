@@ -41,25 +41,25 @@
         $('#delete-modal').removeClass('hidden')
         $('#delete-modal').addClass('flex')
 
-        let pengumumanId = $(this).data('id')
+        let laporanId = $(this).data('id')
         
-        $('#delete-id').val(pengumumanId)
+        $('#delete-id').val(laporanId)
     })
 
 
     $('body').on('click', '#delete-pengumuman-submit', function() {
 
-        let pengumumanId = $('#delete-id').val()
-        console.log(pengumumanId);
+        let laporanId = $('#delete-id').val()
+        console.log(laporanId);
 
         $.ajax({
             method: "DELETE",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: `/pengumuman/${pengumumanId}`,
+            url: `/siswa/laporan-siswa-ajax/${laporanId}`,
             success: function(res) {
-                $('#pengumuman-' + pengumumanId).remove()
+                $('#laporan-' + laporanId).remove()
 
                 $('#backdrop-effect').addClass('hidden')
                 $('#delete-modal').addClass('hidden')
@@ -68,8 +68,8 @@
                 const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
+                        showConfirmButton: true,
+                        timer: 1400,
                         timerProgressBar: true,
                         didOpen: (toast) => {
                             toast.onmouseenter = Swal.stopTimer;
@@ -78,7 +78,7 @@
                     });
                     Toast.fire({
                         icon: "success",
-                        title: "Pengumuman Dihapus!"
+                        title: "Laporan Dihapus!"
                     });
             }
         })
