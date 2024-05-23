@@ -86,8 +86,8 @@
                             <time class="block mb-2 text-sm leading-none text-gray-600 dark:text-gray-500">${convertDate(res.tanggal)}</time>
                             <p class="mb-3 text-justify text-base text-gray-800 dark:text-gray-400">${res.deskripsi}</p>
                             <div
-                                class="${!res.gambar && 'hidden'} inline-flex items-center text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:focus:ring-gray-700">
-                                <img src="${res.gambar && siswaProPic}" alt="${res.judul}" class="rounded-md max-w-full">
+                                class="${res.gambar ? '' : 'hidden'} inline-flex items-center text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:focus:ring-gray-700">
+                                <img src="${res.gambar ? siswaProPic : ''}" alt="${res.judul}" class="rounded-md max-w-full">
                             </div>
                             <div>
                                 <p

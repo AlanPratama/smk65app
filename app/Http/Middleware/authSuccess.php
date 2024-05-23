@@ -19,6 +19,6 @@ class authSuccess
         if (Auth::user() || Auth::check() || Auth::guard('guru')->user() || Auth::guard('guru')->check()) {
             return $next($request);
         }
-        return route('login');
+        return redirect('/')->with('error', 'Silahkan Login Terlebih Dahulu');
     }
 }

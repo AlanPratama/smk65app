@@ -111,7 +111,7 @@
 
     function hapusImage() {
         inputGambar.value = null
-        previewImg.src = null;
+        previewImg.src = '';
         imagePreview.classList.add('hidden');
     }
 

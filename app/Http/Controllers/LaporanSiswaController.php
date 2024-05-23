@@ -140,7 +140,6 @@ class LaporanSiswaController extends Controller
         if ($req->deleteImage == 'true') {
             Storage::delete($laporan->gambar);
             $laporan->gambar = null;
-            // dd($laporan->gambar);
         }
 
         if ($req->hasFile('gambar')) {
@@ -164,17 +163,20 @@ class LaporanSiswaController extends Controller
 
         $laporan->update();
 
+        $data = LaporanSiswa::where('id', $laporan->id)->with('siswa', 'tipe')->first();
+
         // dd($req->all(), $laporan->judul);
 
 
         return response()->json([
             'statusCode' => 200,
-            'data' => $laporan,
+            'data' => $data,
         ]);
     }
     public function destroy($id)
     {
         $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->first();
+
         if ($laporan->gambar) {
             Storage::delete($laporan->gambar);
         }
@@ -184,6 +186,41 @@ class LaporanSiswaController extends Controller
         return response()->json([
             'statusCode' => 200,
             'message' => 'Laporan Dihapus!'
+        ]);
+    }
+
+
+
+
+
+    // FOR GURU FOR RURU
+    public function indexGuru(Request $req)
+    {
+        if ($req->search || $req->tipeId) {
+            if ($req->search && !$req->tipeId) {
+                $laporan = LaporanSiswa::with('siswa', 'tipe')
+                                        ->where('judul', 'LIKE', '%' . $req->search . '%')
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
+            } elseif (!$req->search && $req->tipeId) {
+                $laporan = LaporanSiswa::with('siswa', 'tipe')
+                                        ->where('tipeId', $req->tipeId)
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
+            } elseif($req->search && $req->tipeId) {
+                $laporan = LaporanSiswa::with('siswa', 'tipe')
+                                        ->where('tipeId', $req->tipeId)
+                                        ->where('judul', 'LIKE', '%' . $req->search . '%')
+                                        ->orderBy('created_at', 'desc')
+                                        ->get();
+            }
+        } else {
+            $laporan = LaporanSiswa::orderBy('created_at', 'desc')->with('siswa', 'tipe')->get();
+        }
+        
+        return response()->json([
+            'statusCode' => 200,
+            'data' => $laporan
         ]);
     }
 

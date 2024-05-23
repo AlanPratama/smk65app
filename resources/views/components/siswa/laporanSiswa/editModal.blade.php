@@ -120,7 +120,7 @@
 
     function hapusImageEdit() {
         inputGambarEdit.value = null
-        previewImgEdit.src = null;
+        previewImgEdit.src = '';
         imagePreviewEdit.classList.add('hidden');
         $('#deleteImage').val('true')
     }
@@ -176,12 +176,14 @@
     $('body').on('click', '#btn-edit-laporanSiswa', async function() {
         console.log('asdv');
         let laporanId = $(this).data('id')
-        console.log(laporanId);
+        
         $.ajax({
             url: `/siswa/laporan-siswa-ajax/${laporanId}`,
             method: 'GET',
             success: async function(res) {
                 console.log(res);
+                $('#deleteImage').val('false')
+
                 $('#laporanSiswaIdEdit').val(res.data.id)
                 $('#judulEdit').val(res.data.judul)
                 $('#deskripsiEdit').val(res.data.deskripsi)
@@ -321,7 +323,7 @@
                     console.log(res);
                 },
                 error: function(err) {
-                    console.log(err.responseJSON.errors);
+                    console.log(err);
 
                     if (err.responseJSON.errors.judul[0]) {
                         $('#judulEditError').html(`* ${err.responseJSON.errors.judul[0]}`)

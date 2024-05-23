@@ -86,6 +86,19 @@ Route::middleware('authSuccess')->group(function () {
         Route::get('/dashboard', [GuruViewController::class, 'dashboard']);
 
         Route::get('/pengumuman', [GuruViewController::class, 'pengumuman']);
+
+
+
+        // GURU - LAPORAN SISWA || GURU - LAPORAN SISWA || GURU - LAPORAN SISWA || GURU - LAPORAN SISWA 
+        // GURU - LAPORAN SISWA || GURU - LAPORAN SISWA || GURU - LAPORAN SISWA || GURU - LAPORAN SISWA
         Route::get('/laporan-siswa', [GuruViewController::class, 'laporanSiswa']);
+        Route::get('/laporan-siswa-ajax', [LaporanSiswaController::class, 'indexGuru']);
+        Route::get('/laporan-siswa-ajax/{id}', [LaporanSiswaController::class, 'showGuru']);
+
+        Route::get('/tipe-laporan-ajax', [LaporanSiswaController::class, 'indexTipe']);
+        Route::get('/tipe-laporan-ajax/{id}', [LaporanSiswaController::class, 'showTipe']);
+        Route::post('/tipe-laporan-ajax', [LaporanSiswaController::class, 'storeTipe']);
+        Route::put('/tipe-laporan-ajax/{id}', [LaporanSiswaController::class, 'updateTipe']);
+        Route::delete('/tipe-laporan-ajax/{id}', [LaporanSiswaController::class, 'destroyTipe']);
     });
 });

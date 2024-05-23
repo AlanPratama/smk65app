@@ -34,8 +34,10 @@
         let isNotActive = 'border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group'
 
 
-        $('#tabPengumuman').addClass(isActive)
-        $('#tabTipe').addClass(isNotActive)
+        // $('#tabPengumuman').addClass(isActive)
+        // $('#tabTipe').addClass(isNotActive)
+        $('#tabPengumuman').addClass(isNotActive)
+        $('#tabTipe').addClass(isActive)
 
         // $('#tabPengumuman').addClass(isNotActive)
         // $('#tabTipe').addClass(isActive)

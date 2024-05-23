@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TipeLaporan;
 use App\Models\TipePengumuman;
 use Illuminate\Http\Request;
 
@@ -25,8 +26,9 @@ class GuruViewController extends Controller
     public function laporanSiswa()
     {
         $pgMenu = 'Laporan Siswa';
+        $types = TipeLaporan::all();
 
-        return view('pages.guru.laporanSiswa.viewGuruLaporanSiswa', compact('pgMenu'));
+        return view('pages.guru.laporanSiswa.viewGuruLaporanSiswa', compact('pgMenu', 'types'));
     }
 
 }
