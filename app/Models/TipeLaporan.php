@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TipeLaporan extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function laporan() {
+        return $this->hasMany(LaporanSiswa::class, 'tipeId');
+    }
 }

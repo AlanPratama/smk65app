@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanSiswa;
+use App\Models\TipeLaporan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,24 +17,24 @@ class LaporanSiswaController extends Controller
     {
         if ($req->search) {
             $laporan = LaporanSiswa::where('siswaId', Auth::user()->id)
-                                    ->with('siswa', 'tipe')
-                                    ->where('judul', 'LIKE', '%' . $req->search . '%')
-                                    ->orderBy('created_at', 'desc')
-                                    ->get();
+                ->with('siswa', 'tipe')
+                ->where('judul', 'LIKE', '%' . $req->search . '%')
+                ->orderBy('created_at', 'desc')
+                ->get();
         } else {
             $laporan = LaporanSiswa::where('siswaId', Auth::user()->id)->orderBy('created_at', 'desc')->with('siswa', 'tipe')->get();
         }
-        
+
         return response()->json([
             'statusCode' => 200,
             'data' => $laporan
         ]);
     }
-    
+
     public function show($id)
     {
         $laporan = LaporanSiswa::where('id', $id)->where('siswaId', Auth::user()->id)->with('siswa', 'tipe')->first();
-        
+
         return response()->json([
             'statusCode' => 200,
             'data' => $laporan
@@ -58,7 +59,7 @@ class LaporanSiswaController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'statusCode' => 422,
-                'errors' => $validator->errors() 
+                'errors' => $validator->errors()
             ], 422);
         }
 
@@ -74,7 +75,7 @@ class LaporanSiswaController extends Controller
             $file = $req->file('gambar');
             $fileName =  Str::slug($req->judul) . '-' . time() . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
 
-            
+
             // $destinationPath = public_path('/storage/laporanSiswa');
 
             // // Ensure the destination directory exists
@@ -124,15 +125,15 @@ class LaporanSiswaController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'statusCode' => 422,
-                'errors' => $validator->errors() 
+                'errors' => $validator->errors()
             ], 422);
         }
 
         $laporan = LaporanSiswa::where('id', $id)->with('siswa', 'tipe')->where('siswaId', Auth::user()->id)->first();
         $laporan->tipeId = $req->tipeId;
-        
+
         $laporan->judul = $req->judul;
-        
+
         $laporan->deskripsi = $req->deskripsi;
         $laporan->keterangan = $req->keterangan;
         $laporan->status = $req->status;
@@ -199,29 +200,114 @@ class LaporanSiswaController extends Controller
         if ($req->search || $req->tipeId) {
             if ($req->search && !$req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
-                                        ->where('judul', 'LIKE', '%' . $req->search . '%')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get();
+                    ->where('judul', 'LIKE', '%' . $req->search . '%')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
             } elseif (!$req->search && $req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
-                                        ->where('tipeId', $req->tipeId)
-                                        ->orderBy('created_at', 'desc')
-                                        ->get();
-            } elseif($req->search && $req->tipeId) {
+                    ->where('tipeId', $req->tipeId)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } elseif ($req->search && $req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
-                                        ->where('tipeId', $req->tipeId)
-                                        ->where('judul', 'LIKE', '%' . $req->search . '%')
-                                        ->orderBy('created_at', 'desc')
-                                        ->get();
+                    ->where('tipeId', $req->tipeId)
+                    ->where('judul', 'LIKE', '%' . $req->search . '%')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
             }
         } else {
             $laporan = LaporanSiswa::orderBy('created_at', 'desc')->with('siswa', 'tipe')->get();
         }
-        
+
         return response()->json([
             'statusCode' => 200,
             'data' => $laporan
         ]);
     }
 
+
+    // 
+
+    public function indexTipe(Request $req)
+    {
+        if ($req->search) {
+            $data = TipeLaporan::with('laporan')->where('tipe', 'LIKE', '%' . $req->search . '%')->orderBy('tipe', 'asc')->get();
+        } else {
+            $data = TipeLaporan::with('laporan')->orderBy('tipe', 'asc')->get();
+        }
+
+        return response()->json([
+            'statusCode' => 200,
+            'data' => $data
+        ]);
+    }
+
+    public function showTipe($id)
+    {
+        $data = TipeLaporan::with('laporan')->where('id', $id)->first();
+
+
+        return response()->json([
+            'statusCode' => 200,
+            'data' => $data
+        ]);
+    }
+
+    public function storeTipe(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'tipe' => 'required|unique:tipe_laporans,tipe',
+        ], [
+            'tipe.required' => 'Tipe harus diisi',
+            'tipe.unique' => 'Tipe sudah ada',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'statusCode' => 422,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $tipe = new TipeLaporan();
+        $tipe->tipe = $req->tipe;
+        $tipe->save();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Tipe Tersimpan',
+            'data' => TipeLaporan::where('id', $tipe->id)->with('laporan')->first()
+        ]);
+    }
+
+    public function updateTipe(Request $req, $id)
+    {
+        $validator = Validator::make($req->all(), [
+            'tipe' => 'required|unique:tipe_laporans,tipe,'.$id,
+        ], [
+            'tipe.required' => 'Tipe harus diisi',
+            'tipe.unique' => 'Tipe sudah ada',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'statusCode' => 422,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $tipe = TipeLaporan::findOrFail($id);
+        $tipe->tipe = $req->tipe;
+        $tipe->save();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Tipe Tersimpan',
+            'data' => TipeLaporan::where('id', $tipe->id)->with('laporan')->first()
+        ]);
+    }
+
+    public function destroyTipe($id)
+    {
+    }
 }

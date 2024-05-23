@@ -67,7 +67,7 @@
                         Tipe
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Pengumuman Count
+                        Laporan Count
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Action
@@ -79,14 +79,14 @@
         </table>
     </div>
 
-    @include('components.guru.viewGuruPengumuman.tipe.editModal')
-@include('components.guru.viewGuruPengumuman.tipe.deleteModal')
+    @include('components.guru.viewGuruLaporanSiswa.tipeLaporan.editModal')
+@include('components.guru.viewGuruLaporanSiswa.tipeLaporan.deleteModal')
 
     <script>
         function searchTipe(str) {
             console.log(str);
             $.ajax({
-                url: '/tipe-pengumumanAjax',
+                url: '/guru/tipe-laporan-ajax',
                 method: 'GET',
                 data: {
                     search: str
@@ -105,7 +105,7 @@
                                 ${res.tipe}
                             </th>
                             <td class="px-6 py-4">
-                                ${res.pengumuman.length}
+                                ${res.laporan.length}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-2">
@@ -165,7 +165,7 @@
         function getDataTipe() {
             $.ajax({
             type: 'GET',
-            url: '/tipe-pengumumanAjax',
+            url: '/guru/tipe-laporan-ajax',
             success: function(res) {
                 console.log(res);
                 $('#table-tipe').empty();
@@ -180,7 +180,7 @@
                                 ${res.tipe}
                             </th>
                             <td class="px-6 py-4">
-                                ${res.pengumuman.length}
+                                ${res.laporan.length}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-2">
@@ -266,7 +266,7 @@
                                         ${res.data.tipe}
                                     </th>
                                     <td class="px-6 py-4">
-                                        ${res.data.pengumuman.length}
+                                        ${res.data.laporan.length}
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center space-x-2">
