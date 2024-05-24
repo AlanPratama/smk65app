@@ -134,8 +134,8 @@
 
         $('#judulEdit').val('')
         $('#deskripsiEdit').val('')
-        $('#tipeOption').val('')
-        $('#tipeOption').text('Pilih Tipe')
+        // $('#tipeOption').val('')
+        // $('#tipeOption').text('Pilih Tipe')
         $('#keteranganEdit').val('')
         $('#statusEdit').prop('checked', false);
 
@@ -156,8 +156,8 @@
 
         $('#judulEdit').val('')
         $('#deskripsiEdit').val('')
-        $('#tipeOption').val('')
-        $('#tipeOption').text('Pilih Tipe')
+        // $('#tipeOption').val('')
+        // $('#tipeOption').text('Pilih Tipe')
         $('#keteranganEdit').val('')
         $('#statusEdit').prop('checked', false);
 
@@ -191,6 +191,9 @@
                 if (res.data.tipe) {
                     $('#tipeIdEdit').val(res.data.tipe.id)
                     $('#tipeIdEdit').text(res.data.tipe.tipe)
+                } else {
+                    $('#tipeIdEdit').val('')
+                    $('#tipeIdEdit').text('Pilih Tipe Laporan')
                 }
 
                 $('#keteranganEdit').val(res.data.keterangan)
@@ -255,7 +258,7 @@
                                 <h3 class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">${res.data.judul} <span
                                         class="${!res.data.tipe && 'hidden'} bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">${res.data.tipe && res.data.tipe.tipe}</span>
                                 </h3>
-                                <time class="block mb-2 text-sm leading-none text-gray-600 dark:text-gray-500">${convertDate(res.data.tanggal)}</time>
+                                <time class="block mb-2 text-sm leading-none text-gray-600 dark:text-gray-500">${convertDate(res.data.tanggal)} - ${convertTime(res.data.created_at)} (${res.data.status})</time>
                                 <p class="mb-3 text-justify text-base text-gray-800 dark:text-gray-400">${res.data.deskripsi}</p>
                                 <div
                                     class="${!res.data.gambar && 'hidden'} inline-flex items-center text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:focus:ring-gray-700">
@@ -323,22 +326,22 @@
                     console.log(res);
                 },
                 error: function(err) {
-                    console.log(err);
+                    console.log(err.responseJSON);
 
-                    if (err.responseJSON.errors.judul[0]) {
+                    if (err.responseJSON.errors.judul) {
                         $('#judulEditError').html(`* ${err.responseJSON.errors.judul[0]}`)
                     }
 
-                    if (err.responseJSON.errors.deskripsi[0]) {
+                    if (err.responseJSON.errors.deskripsi) {
                         $('#deskripsiEditError').html(
                             `* ${err.responseJSON.errors.deskripsi[0]}`)
                     }
 
-                    if (err.responseJSON.errors.tipeId[0]) {
+                    if (err.responseJSON.errors.tipeId) {
                         $('#tipeIdEditError').html(`* ${err.responseJSON.errors.tipeId[0]}`)
                     }
 
-                    if (err.responseJSON.errors.gambar[0]) {
+                    if (err.responseJSON.errors.gambar) {
                         $('#gambarEditError').html(`* ${err.responseJSON.errors.gambar[0]}`)
                     }
 

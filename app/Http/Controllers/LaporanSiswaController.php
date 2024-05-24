@@ -18,7 +18,7 @@ class LaporanSiswaController extends Controller
         if ($req->search) {
             $laporan = LaporanSiswa::where('siswaId', Auth::user()->id)
                 ->with('siswa', 'tipe')
-                ->where('judul', ''. $req->search . '%')
+                ->where('judul', 'LIKE', '%' . $req->search . '%')
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
@@ -200,7 +200,7 @@ class LaporanSiswaController extends Controller
         if ($req->search || $req->tipeId) {
             if ($req->search && !$req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
-                    ->where('judul', ''. $req->search . '%')
+                    ->where('judul', 'LIKE', '%' . $req->search . '%')
                     ->orderBy('created_at', 'desc')
                     ->get();
             } elseif (!$req->search && $req->tipeId) {
@@ -211,7 +211,7 @@ class LaporanSiswaController extends Controller
             } elseif ($req->search && $req->tipeId) {
                 $laporan = LaporanSiswa::with('siswa', 'tipe')
                     ->where('tipeId', $req->tipeId)
-                    ->where('judul', ''. $req->search . '%')
+                    ->where('judul', 'LIKE', '%' . $req->search . '%')
                     ->orderBy('created_at', 'desc')
                     ->get();
             }
@@ -231,7 +231,7 @@ class LaporanSiswaController extends Controller
     public function indexTipe(Request $req)
     {
         if ($req->search) {
-            $data = TipeLaporan::with('laporan')->where('tipe', ''. $req->search . '%')->orderBy('tipe', 'asc')->get();
+            $data = TipeLaporan::with('laporan')->where('tipe', 'LIKE', '%' . $req->search . '%')->orderBy('tipe', 'asc')->get();
         } else {
             $data = TipeLaporan::with('laporan')->orderBy('tipe', 'asc')->get();
         }
